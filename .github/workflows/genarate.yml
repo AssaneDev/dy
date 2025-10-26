@@ -1,12 +1,21 @@
-name: Random Generate Number
+name: Random Gen
+
 on: [push]
+
 jobs:
-  random-number
-  runs-on:ubuntu-latest
-  steps:
-    name:generate number
-    id: generate
-    run: echo " number=$((RANDOM % 100)) " >> $GITHUB_OUTPUT
-  steps:
-    name: affiche number
-    run : echo " Le nombre aleatoire est ${{steps.generate.outputs.number}}
+  random-nums:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: generate num
+        id: gen
+        run: echo "num=$((RANDOM % 100))" >> $GITHUB_OUTPUT
+
+      - name: affiche
+        run: echo "Le nombre aléatoire est ${{ steps.gen.outputs.num }}"
+    
+
+
+        
+
+
