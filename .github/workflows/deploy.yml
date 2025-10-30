@@ -18,18 +18,18 @@ jobs:
         run: echo "version=1.0${GITHUB_RUN_NUMBER}" >> $GITHUB_OUTPUT
  
   test:
-     runs-on: ubuntu-latest
-     needs: build
-     outputs:
-       message: ${{steps.display.outputs.message}}
+    runs-on: ubuntu-latest
+    needs: build
+    outputs:
+     message: ${{steps.display.outputs.message}}
 
-     steps:
-      - name: checkout
+    steps:
+      - name: Checkout
         uses: actions/checkout@v4
   
-      - name: affiche
+      - name: Test réussi
         id: display
-        run: echo "message=test reussie" >> $GITHUB_OUTPUTS
+        run: echo "message=Test réussi ✅" >> $GITHUB_OUTPUT
 
   deploy:
      runs-on: ubuntu-latest
