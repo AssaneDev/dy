@@ -44,6 +44,10 @@ jobs:
       - name: Deploy version
         if: ${{ needs.test.result == 'success' }}    # ✅ les valeurs doivent être entre guillemets
         run: echo "Déploiement de la version ${{ needs.build.outputs.version }}"
-
-       
+  notify:
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    if: ${{ needs.test.result == 'fealure' }}
+    steps:
+      - run: echo "Le Déploiment a échouer"
         
