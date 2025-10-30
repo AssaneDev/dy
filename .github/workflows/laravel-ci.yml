@@ -26,9 +26,9 @@ jobs:
       - name: install php8.3
         id: insphp
         run: |
-            echo "sudo add-apt-repository ppa:ondrej/php"
-            echo "sudo apt update"
-            echo "sudo apt install php8.3"
+            run sudo add-apt-repository ppa:ondrej/php
+            run sudo apt update
+            run sudo apt install php8.3
 
       - name: php artisan test
         id: artitest
