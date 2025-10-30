@@ -1,4 +1,8 @@
-name: Random Gen
+
+
+
+
+name: Random Gen with if
 
 on: [push]
 
@@ -6,16 +10,23 @@ jobs:
   random-nums:
     runs-on: ubuntu-latest
 
+
     steps:
-      - name: generate num
-        id: gen
-        run: echo "num=$((RANDOM % 100))" >> $GITHUB_OUTPUT
+     - name: generate num if
+       id: gen
+       run: echo "numif=$((RANDOM % 100))">>$GITHUB_OUTPUT
 
-      - name: affiche
-        run: echo "Le nombre aléatoire est ${{ steps.gen.outputs.num }}"
-    
+     -  name: affiche petit nombre
+        if: ${{ fromJSON(steps.gen.outputs.numif) < 50}}
+        run: echo "petit nombre"
+      
 
+     - name: affiche grand nombre    
+       if: ${{ fromJSON(steps.gen.outputs.numif) >= 50 }}
+       run: echo "grand nombre"
 
+     - name: Affiche le nombre exacte
+       run: echo "le nombre gerere etait ${{ steps.gen.outputs.numif }}"
         
 
 
