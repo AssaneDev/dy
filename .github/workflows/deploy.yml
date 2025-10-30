@@ -5,17 +5,17 @@ on: [push]
 
 jobs:
   build:
-     runs-on: ubuntu-lastest
+     runs-on: ubuntu-latest
      outputs:
-        version: ${steps.first.outputs.version}
+        version: ${{steps.first.outputs.version}}
 
      steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v4
     
-      - name: message
+      - name: Génération version
         id: first
-        run: echo "version=1.0${{GITHUB_RUN_NUMBER}}"
+        run: echo "version=1.0${GITHUB_RUN_NUMBER}" >> $GITHUB_OUTPUT
  
   test:
      runs-on: ubuntu-latest
@@ -29,7 +29,7 @@ jobs:
   
       - name: affiche
         id: display
-        run: echo"messag=test reussie" >> $GITHUB_OUTPUTS
+        run: echo "message=test reussie" >> $GITHUB_OUTPUTS
 
   deploy:
      runs-on: ubuntu-latest
@@ -40,8 +40,11 @@ jobs:
         uses: actions/checkout@v4
        
 
-      - name: affiche version
-        run: echo"${{needs.build.outputs.version}}"
-     
+      - name: affiche version Et message
+        run: |
+          echo "La version du build ${{needs.build.outputs.version}}"
+          echo "message du test ${{needs.test.outputs.message}}"
+          
+               
 
   
