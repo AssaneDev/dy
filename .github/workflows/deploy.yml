@@ -1,31 +1,47 @@
-name: test deploy
+
+name: retest deploy
 
 on: [push]
 
-jobs: 
+jobs:
   build:
-    runs-on: ubuntu-latest
-    outputs: 
-      message: ${{steps.version.outputs.message}}
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-
-      - name: Generation message
-        id: version
-        run: echo "message=Hello depuis build" >> $GITHUB_OUTPUT
-
-  deploy:
-     runs-on: ubuntu-latest
-     needs: build
+     runs-on: ubuntu-lastest
+     outputs:
+        version: ${steps.first.outputs.version}
 
      steps:
       - name: checkout
         uses: actions/checkout@v4
+    
+      - name: message
+        id: first
+        run: echo "version=1.0${{GITHUB_RUN_NUMBER}}"
+ 
+  test:
+     runs-on: ubuntu-latest
+     needs: build
+     outputs:
+       message: ${{steps.display.outputs.message}}
 
-      - name: message depuis build
-        id: affiche
-        run: echo "message ${{needs.build.outputs.message}}"
-   
+     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+  
+      - name: affiche
+        id: display
+        run: echo"messag=test reussie" >> $GITHUB_OUTPUTS
+
+  deploy:
+     runs-on: ubuntu-latest
+     needs: [build,test]
+
+     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+       
+
+      - name: affiche version
+        run: echo"${{needs.build.outputs.version}}"
+     
 
   
