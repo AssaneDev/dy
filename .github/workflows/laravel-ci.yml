@@ -46,7 +46,7 @@ jobs:
         run: echo "Déploiement de la version ${{ needs.build.outputs.version }}"
   notify:
     runs-on: ubuntu-latest
-    needs: [deploy]
+    needs: [test]
     if: ${{ needs.test.result == 'fealure' }}
     steps:
       - run: echo "Le Déploiment a échouer"
